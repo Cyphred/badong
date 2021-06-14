@@ -15,6 +15,15 @@ for (const file of commandFiles) {
 // Sets the prefix for commands
 const prefix =';'
 
+function mc_handler(message, args) {
+	switch (args[0]) {
+		case 'status':
+			client.commands.get('minecraft-server-status').execute(message, args, config, mc_server_util);
+			break;
+	}
+}
+
+
 client.once('ready', () => {
 	console.log('Badong is Online');
 });
@@ -30,7 +39,7 @@ client.on('message', message => {
 			client.commands.get('ping').execute(message, args, client);
 			break;
 		case 'mc':
-			client.commands.get('minecraft-server-status').execute(message, args, config, mc_server_util);
+			mc_handler(message, args);
 			break;
 	}
 });

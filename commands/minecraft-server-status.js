@@ -1,6 +1,6 @@
 module.exports = {
 	name: 'minecraft-server-status',
-	description: "Commands for the Minecraft server.",
+	description: "Queries the Minecraft server's status.",
 	execute (message, args, config, util) {
 		const Discord = require('discord.js');
 		const SERVER_ADDRESS = config.minecraft_server_address;
@@ -11,6 +11,27 @@ module.exports = {
 			.setDescription('Fetching server data...')
 			.setTimestamp();
 
+		function main() {
+			util.status(SERVER_ADDRESS)
+				.then((result) => {
+					serverOnline(result.rawResponse);
+				})
+				.catch((error) => {
+					serverOffline();
+					console.error(error);
+				});
+
+			message.channel.send(embed).then (async (msg) =>{
+				msg.delete();
+			});
+		}
+
+		/**
+		 * Called if the server is online.
+		 * This modifies the embed object to bear the server's info.
+		 *
+		 * @param server_info is the object containing the server's information.
+		 */
 		function serverOnline(server_info) {
 			const sfbuff = new Buffer.from(server_info.favicon.split(",")[1], "base64");
 			const sfattach = new Discord.MessageAttachment(sfbuff, "output.png");
@@ -28,6 +49,11 @@ module.exports = {
 			message.channel.send(embed);
 		}
 
+		/**
+		 * Called if the server is offline.
+		 * This modifies the embed object to inform the user that the
+		 * server is offline.
+		 */
 		function serverOffline() {
 			embed = new Discord.MessageEmbed();
 			embed.setTitle('Minecraft Server Status');
@@ -37,25 +63,6 @@ module.exports = {
 			message.channel.send(embed);
 		}
 
-		function query() {
-			util.status(SERVER_ADDRESS)
-				.then((result) => {
-					serverOnline(result.rawResponse);
-				})
-				.catch((error) => {
-					serverOffline();
-					console.error(error);
-				});
-		}
-
-		switch (args[0]) {
-			case 'status':
-				query();
-				message.channel.send(embed).then (async (msg) =>{
-					msg.delete();
-				});
-
-				break;
-		}
+		main(); // Call main function
 	}
 }
