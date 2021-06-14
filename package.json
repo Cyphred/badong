@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/Cyphred/badong/issues"
   },
-  "homepage": "https://github.com/Cyphred/badong#readme"
+  "homepage": "https://github.com/Cyphred/badong#readme",
+  "dependencies": {
+    "discord.js": "^12.5.3"
+  }
 }
