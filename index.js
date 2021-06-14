@@ -1,4 +1,5 @@
 const Discord = require('discord.js');
+const mc_server_util = require('minecraft-server-util');
 const client = new Discord.Client();
 const config = require('./config.json');
 
@@ -27,6 +28,9 @@ client.on('message', message => {
 	switch (command) {
 		case 'ping':
 			client.commands.get('ping').execute(message, args, client);
+			break;
+		case 'mc':
+			client.commands.get('minecraft-server-status').execute(message, args, config, mc_server_util);
 			break;
 	}
 });
