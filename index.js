@@ -1,5 +1,4 @@
 const Discord = require('discord.js');
-const mc_server_util = require('minecraft-server-util');
 const client = new Discord.Client();
 const config = require('./config.json');
 
@@ -18,7 +17,10 @@ const prefix =';'
 function mc_handler(message, args) {
 	switch (args[0]) {
 		case 'status':
-			client.commands.get('minecraft-server-status').execute(message, args, config, mc_server_util);
+			client.commands.get('minecraft-server-status').execute(message, config);
+			break;
+		case 'stop':
+			client.commands.get('minecraft-server-rcon').execute(message, args, config);
 			break;
 	}
 }
