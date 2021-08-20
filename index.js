@@ -1,6 +1,7 @@
 const Discord = require('discord.js');
 const client = new Discord.Client();
 const config = require('./config.json');
+const XMLHttpRequest = require('xmlhttprequest').XMLHttpRequest;
 
 // For loading commands from .js files in the ./commands folder
 const fs = require('fs');
@@ -13,18 +14,19 @@ for (const file of commandFiles) {
 
 // Sets the prefix for commands
 const prefix =';'
+const ngrok_ip = process.argv[2];
 
 function mc_handler(message, args) {
 	switch (args[0]) {
 		case 'status':
-			client.commands.get('minecraft-server-status').execute(message, config);
+			client.commands.get('minecraft-server-status').execute(message, config, ngrok_ip);
 			break;
 		case 'stop':
+	case 'players':
 			client.commands.get('minecraft-server-rcon').execute(message, args, config);
 			break;
 	}
 }
-
 
 client.once('ready', () => {
 	console.log('Badong is Online');

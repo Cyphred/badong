@@ -38,6 +38,9 @@ module.exports = {
 				case 'stop':
 					stopServer();
 					break;
+				case 'players':
+					listPlayers();
+					break;
 			}
 
 		}
@@ -48,9 +51,21 @@ module.exports = {
 		function stopServer() {
 			client.connect()
 				.then(async () => {
-					await client.run('say This is a test');
+					await client.run('stop');
 					client.close();
 					message.channel.send(':octagonal_sign: Stopping the server!');
+				})
+				.catch((error) => {
+					console.error(error);
+				});
+		}
+
+		function listPlayers() {
+			client.connect()
+				.then(async () => {
+					await client.run('list');
+					client.close();
+					message.channel.send('Listing players...');
 				})
 				.catch((error) => {
 					console.error(error);

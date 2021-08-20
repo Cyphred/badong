@@ -18,6 +18,8 @@
   "homepage": "https://github.com/Cyphred/badong#readme",
   "dependencies": {
     "discord.js": "^12.5.3",
-    "minecraft-server-util": "^3.5.1"
+    "mc-server-status": "^2.0.2",
+    "minecraft-server-util": "^3.5.2",
+    "xmlhttprequest": "^1.8.0"
   }
 }

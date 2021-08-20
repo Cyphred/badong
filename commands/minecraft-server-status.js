@@ -1,7 +1,7 @@
 module.exports = {
 	name: 'minecraft-server-status',
 	description: "Queries the Minecraft server's status.",
-	execute (message, config) {
+	execute (message, config, ip) {
 		const util = require('minecraft-server-util');
 		const Discord = require('discord.js');
 
@@ -14,9 +14,11 @@ module.exports = {
 			.setTimestamp();
 
 		function main() {
+			//message.channel.send('<:yagoosad:741183209605300264> Server status checking is currently being worked on.');
+			//return;
 			util.status(ADDRESS)
 				.then((result) => {
-					promptServerOnline(result.rawResponse);
+					promptServerOnline(result);
 				})
 				.catch((error) => {
 					promptServerOffline();
@@ -42,17 +44,18 @@ module.exports = {
 			const sfattach = new Discord.MessageAttachment(sfbuff, "server-icon.png");
 
 			// Determine the number of players
-			var online_players = `${server_info.players.online}/${server_info.players.max}`;
+			var online_players = `${server_info.onlinePlayers}/${server_info.maxPlayers}`;
 
 			// Re-create the embed.
 			embed = new Discord.MessageEmbed()
 				.setColor('#00E658') // Bright green color
 				.setTitle('Minecraft Server Status')
 				.addFields(
-					{ name: 'Server Name', value: server_info.description.text },
+					{ name: 'Server Name', value: server_info.description.descriptionText },
+					{ name: 'ngrok IP', value: ip },
 					{ name: 'Active Status', value: '🟢 Online' },
-					{ name: 'Version', value: server_info.version.name, inline: true },
-					{ name: 'Players Online', value: online_players, inline: true },
+					{ name: 'Version', value: server_info.version, inline: true },
+					{ name: 'Players Online', value: server_info.onlinePlayers, inline: true },
 				)
 				.attachFiles(sfattach)
 				.setImage('attachment://server-icon.png')
