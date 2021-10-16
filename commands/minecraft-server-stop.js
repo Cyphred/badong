@@ -4,9 +4,9 @@ module.exports = {
 	execute (message, args, config) {
 		const util = require('minecraft-server-util');
 
-		const ADDRESS = config.minecraft_server_address;
-		const RCON_PORT = parseInt(config.minecraft_server_rcon_port);
-		const RCON_PASSWORD = config.minecraft_server_rcon_password;
+		const ADDRESS = config.mc_server.ip;
+		const RCON_PORT = parseInt(config.rcon.port);
+		const RCON_PASSWORD = config.rcon.password;
 		const REQUIRED_ROLE_NAME = 'Minecraft Mod';
 		var client;
 

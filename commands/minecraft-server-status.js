@@ -5,8 +5,8 @@ module.exports = {
 		const util = require('minecraft-server-util');
 		const Discord = require('discord.js');
 
-		const ADDRESS = config.minecraft_server_address;
-		const PORT = parseInt(config.minecraft_server_port);
+		const ADDRESS = config.mc_server.ip;
+		const PORT = config.mc_server.port;
 
 		var embed = new Discord.MessageEmbed()
 			.setColor('#0099ff')
